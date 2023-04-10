@@ -1,10 +1,10 @@
-package com.mdu.mongo;
+package com.trio.poject;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MongoApplicationTests {
+class TrioApplicationTests {
 
 	@Test
 	void contextLoads() {
