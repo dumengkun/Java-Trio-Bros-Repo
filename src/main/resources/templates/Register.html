@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Online Portal</title>
+    </head>
+    <body>
+        <h2>Welcome to Java Trio Bros Learner App!</h2>
+        <p>Mengkun Du, Vue Kao, Shijun Yang</p>
+        <hr>
+
+        <h3>Please enter the following information to register:</h3>
+        <form action="#" th:action="@{/register}" method="post">
+            <p id="name">
+                Name: <input type="text" th:object="${personInput}" th:field="*{name}" />
+            </p>
+            <p id="email">
+                Email: <input type="text" th:object="${personInput}" th:field="*{email}" />
+            </p>
+            <p id="button">
+                <input type="submit" value="Submit" />
+                <input type="reset" value="Reset" />
+            </p>
+        </form>
+        <hr>
+
+        <a href="/results">View all users</a>
+        <br>
+        <a href="/home">Return to home page</a>
+
+    </body>
+</html>

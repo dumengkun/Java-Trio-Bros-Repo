@@ -1,0 +1,35 @@
+<html>
+    <head> 
+        <title>Trio Bros</title>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body>
+        <h2>Welcome to Java Trio Bros Learner App!</h2>
+        <p>Mengkun Du, Vue Kao, Shijun Yang</p>
+        <hr>
+
+        <h3 th:text="${message}"></h3>
+        <table>
+            <tr>
+                <td>Name</td>
+                <td>Email</td>
+            </tr>
+            <th:block th:each="user : ${personOutput}">
+                <tr>
+                    <td th:text="${user.getName()}"></td>
+                    <td th:text="${user.getEmail()}"></td>
+                </tr>
+            </th:block>
+        </table>
+        <hr>
+
+        <a href="/register">Register for another user</a>
+        <br>
+        <a href="/update">Need to delete</a>
+        <br>
+        <a href="/results">View all users</a>
+        <br>
+        <a href="/home">Return to home page</a>
+        
+    </body>
+</html>
