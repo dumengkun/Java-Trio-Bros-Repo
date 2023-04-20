@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Person Records</title>
+</head>
+<body>
+    <h1>Person Records</h1>
+    <form th:action="@{/createPerson}" th:object="${person}" method="post">
+        <input type="text" th:field="*{firstName}" placeholder="First name">
+        <input type="text" th:field="*{lastName}" placeholder="Last name">
+        <input type="text" th:field="*{email}" placeholder="Email">
+        <button type="submit">Add</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="person : ${people}">
+                <td th:text="${person.firstName}"></td>
+                <td th:text="${person.lastName}"></td>
+                <td th:text="${person.email}"></td>
+                <td>
+                    <form th:action="@{/deletePerson}" method="post">
+                        <input type="hidden" name="email" th:value="${person.email}">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Trio Runner</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+            font-family: Arial, sans-serif;
+        }
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f8f8f8;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        textarea {
+            resize: none;
+            margin-bottom: 10px;
+        }
+        pre {
+            text-align: center;
+            width: 80%;
+            white-space: pre-wrap;
+        }
+        .logo {
+            cursor: pointer;
+        }
+
+
+
+        .container {
+            display: flex;
+            margin-left: 200px;
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            left: 20px;
+            top: 250px;
+            transform: translateY(-50%);
+            background-color: lightgray;
+            border: 1px solid black;
+            padding: 10px;
+        }
+        
+        .sidebar h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .sidebar button {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo" onclick="location.href='/'">Trio</div>
+        <button>Account</button>
+    </header>
+    <h1>Trio Runner</h1>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>Java Tutorial</h2>
+            <button>Java if-else</button>
+            <button>Java boolean</button>
+            <button>Java for loop</button>
+            <button>Java arrays</button>
+        </div>
+        <div>
+            <form method="post" action="/runner">
+                <label for="code">Code:</label>
+                <br/>
+                <textarea id="code" name="code" rows="15" cols="80" required></textarea>
+                <br/>
+                <button type="submit">Execute</button>
+            </form>
+            <h2>Output:</h2>
+            <pre th:text="${output}"></pre>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        document.getElementById('code').value = /*[[${submittedCode}]]*/ "";
+    </script>
+
+</body>
+</html>
