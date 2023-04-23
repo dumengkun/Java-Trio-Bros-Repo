@@ -4,8 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/")
 public class TrioController
@@ -17,10 +15,40 @@ public class TrioController
         this.service = service;
     }
 
+    @GetMapping("/ifelse_puzzle")
+    public String ifelsepuzzle()
+    {
+        return "ifelse_puzzle";
+    }
+
     @GetMapping("/")
     public String home()
     {
         return "index";
+    }
+
+    @GetMapping("/ifelse")
+    public String ifelse()
+    {
+        return "ifelse";
+    }
+
+    @GetMapping("/boolean")
+    public String booleanPage()
+    {
+        return "boolean";
+    }
+
+    @GetMapping("/forloop")
+    public String forloop()
+    {
+        return "forloop";
+    }
+
+    @GetMapping("/array")
+    public String array()
+    {
+        return "array";
     }
 
     @GetMapping("/runner")
@@ -48,28 +76,4 @@ public class TrioController
 
         return "runner";
     }
-
-    @GetMapping("/display")
-    public String fetchAllPerson(Model model) 
-    {
-        List<Trio> persons = service.getAllResources();
-        model.addAttribute("person", new Trio());
-        model.addAttribute("people", persons);
-        return "index";
-    }
-
-    @PostMapping("/createPerson")
-    public String createPerson(@ModelAttribute Trio person) 
-    {
-        service.createPerson(person);
-        return "redirect:/display";
-    }
-
-    @PostMapping("/deletePerson")
-    public String deletePerson(@RequestParam("email") String email) 
-    {
-        service.deletePersonByEmail(email);
-        return "redirect:/display";
-    }
-
 }

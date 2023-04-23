@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Trio Runner</title>
+    <title>Trio</title>
     <style>
         body {
             display: flex;
@@ -41,8 +41,6 @@
             cursor: pointer;
         }
 
-
-
         .container {
             display: flex;
             margin-left: 200px;
@@ -80,23 +78,23 @@
     <div class="container">
         <div class="sidebar">
             <h2>Java Tutorial</h2>
-            <button>Java if-else</button>
-            <button>Java boolean</button>
-            <button>Java for loop</button>
-            <button>Java arrays</button>
-        </div>
-        <div>
-            <form method="post" action="/runner">
-                <label for="code">Code:</label>
-                <br/>
-                <textarea id="code" name="code" rows="15" cols="80" required></textarea>
-                <br/>
-                <button type="submit">Execute</button>
-            </form>
-            <h2>Output:</h2>
-            <pre th:text="${output}"></pre>
+            <button onclick="location.href='/ifelse'">Java if-else</button>
+            <button onclick="location.href='/boolean'">Java boolean</button>
+            <button onclick="location.href='/forloop'">Java for loop</button>
+            <button onclick="location.href='/array'">Java arrays</button>
         </div>
     </div>
+    <div>
+        <form method="post" action="/runner">
+            <br/>
+            <textarea id="code" name="code" rows="15" cols="80" required></textarea>
+            <br/>
+            <button type="submit">Execute</button>
+        </form>
+        <h2>Output:</h2>
+        <pre th:text="${output}"></pre>
+    </div>
+    
 
     <script th:inline="javascript">
         document.getElementById('code').value = /*[[${submittedCode}]]*/ "";

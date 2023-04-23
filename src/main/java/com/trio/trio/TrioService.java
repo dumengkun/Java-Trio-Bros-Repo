@@ -2,10 +2,17 @@ package com.trio.trio;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import java.lang.reflect.Method;
+
+import java.io.PrintWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.net.URI;
 
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
@@ -17,14 +24,6 @@ import javax.tools.ForwardingJavaFileManager;
 import javax.tools.JavaFileManager;
 import javax.tools.StandardJavaFileManager;
 
-import java.lang.reflect.Method;
-
-import java.io.PrintWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.net.URI;
-
 import org.springframework.stereotype.Service;
 import lombok.AllArgsConstructor;
 
@@ -32,27 +31,6 @@ import lombok.AllArgsConstructor;
 @Service
 public class TrioService 
 {
-    private final TrioRepository resourceRepository;
-
-    public List<Trio> getAllResources()
-    {
-        return this.resourceRepository.findAll();
-    }
-
-    public Trio createPerson(Trio record)
-    {
-        return resourceRepository.save(record);
-    }
-
-    public void deletePersonByEmail(String email) 
-    {
-        Trio record = resourceRepository.findByEmail(email);
-        if (record != null) 
-        {
-            resourceRepository.deleteById(record.getId());
-        }
-    }
-
     public String execute(String code) throws Exception 
     {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
