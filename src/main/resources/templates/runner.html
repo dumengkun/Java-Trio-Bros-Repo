@@ -87,7 +87,15 @@
     <div>
         <form method="post" action="/runner">
             <br/>
-            <textarea id="code" name="code" rows="15" cols="80" required></textarea>
+            <textarea id="code" name="code" rows="15" cols="80">
+public class Trio 
+{
+    public static void main(String[] args) 
+    {
+
+    }
+}
+            </textarea>
             <br/>
             <button type="submit">Execute</button>
         </form>
@@ -97,7 +105,11 @@
     
 
     <script th:inline="javascript">
-        document.getElementById('code').value = /*[[${submittedCode}]]*/ "";
+        var submittedCode = /*[[${submittedCode}]]*/ "";
+        if (submittedCode) 
+        {
+            document.getElementById('code').value = submittedCode;
+        }
     </script>
 
 </body>

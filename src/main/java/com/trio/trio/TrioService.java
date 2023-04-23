@@ -1,27 +1,20 @@
 package com.trio.trio;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import java.lang.reflect.Method;
-
-import java.io.PrintWriter;
 import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintStream;
-import java.net.URI;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
+import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
-import javax.tools.SimpleJavaFileObject;
 import javax.tools.ToolProvider;
-import javax.tools.FileObject;
-import javax.tools.ForwardingJavaFileManager;
-import javax.tools.JavaFileManager;
 import javax.tools.StandardJavaFileManager;
 
 import org.springframework.stereotype.Service;
@@ -31,83 +24,71 @@ import lombok.AllArgsConstructor;
 @Service
 public class TrioService 
 {
-    public String execute(String code) throws Exception 
+    public String compileAndRunJavaCode(String code)
     {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-    
-        String className = extractClassName(code);
-        JavaFileObject file = new InMemoryJavaFileObject(className, code);
-        Iterable<? extends JavaFileObject> compilationUnits = Arrays.asList(file);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    
-        DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
-        StandardJavaFileManager standardFileManager = compiler.getStandardFileManager(diagnostics, null, null);
-    
-        Map<String, ByteArrayOutputStream> classBytes = new HashMap<>();
-        JavaFileManager fileManager = new ForwardingJavaFileManager<>(standardFileManager) 
-        {
-            @Override
-            public JavaFileObject getJavaFileForOutput(Location location, String className, JavaFileObject.Kind kind, FileObject sibling) 
-            {
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                classBytes.put(className, baos);
-                return new SimpleJavaFileObject(URI.create("string:///" + className.replace('.', '/') + kind.extension), kind) 
-                {
-                    @Override
-                    public OutputStream openOutputStream() 
-                    {
-                        return baos;
-                    }
-                };
-            }
-        };
-    
-        JavaCompiler.CompilationTask task = compiler.getTask(new PrintWriter(outputStream), fileManager, diagnostics, null, null, compilationUnits);
-        boolean success = task.call();
-        
-        if (success) 
-        {
-            return runCode(className, code, classBytes);
-        } 
-        else 
-        {
-            throw new Exception("Compilation failed:\n" + outputStream.toString());
-        }
-    }
-    
+        String className = "Trio";
+        String fileName = className + ".java";
+        String outputDirectory = "./tempCode/";
 
-    private String runCode(String className, String code, Map<String, ByteArrayOutputStream> classBytes) throws Exception 
-    {
+        File sourceFile = new File(outputDirectory + fileName);
+        sourceFile.getParentFile().mkdirs();
+
+        try (FileWriter fileWriter = new FileWriter(sourceFile)) 
+        {
+            fileWriter.write(code);
+        } 
+        catch (IOException e) 
+        {
+            e.printStackTrace();
+            return null;
+        }
+
+        DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
+        StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
+        Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(java.util.Collections.singletonList(sourceFile));
+        JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, null, null, compilationUnits);
+
+        if (!task.call()) 
+        {
+            StringBuilder errorMessage = new StringBuilder();
+
+            for (Diagnostic<?> diagnostic : diagnostics.getDiagnostics()) 
+            {
+                errorMessage.append(diagnostic).append("\n");
+            }
+
+            return errorMessage.toString();
+        }
+
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outputStream));
-    
-        try 
+
+        try {
+            try (URLClassLoader classLoader = new URLClassLoader(new URL[]{new File(outputDirectory).toURI().toURL()})) 
+            {
+                Class<?> cls = classLoader.loadClass(className);
+                cls.getMethod("main", String[].class).invoke(null, (Object) new String[0]);
+            }
+        } 
+        catch (Exception e) 
         {
-            Class<?> codeRunnerClass = InMemoryClassLoader.load(className, code, classBytes);
-            Method mainMethod = codeRunnerClass.getDeclaredMethod("main", String[].class);
-            mainMethod.invoke(null, (Object) new String[]{});
-    
-            return outputStream.toString();
+            e.printStackTrace();
+            return null;
         } 
         finally 
         {
+            try {
+                Files.deleteIfExists(Paths.get(outputDirectory + fileName));
+                Files.deleteIfExists(Paths.get(outputDirectory + className + ".class"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             System.setOut(originalOut);
         }
-    }
 
-    private String extractClassName(String code)
-    {
-        Pattern pattern = Pattern.compile("public\\s+class\\s+(\\w+)");
-        Matcher matcher = pattern.matcher(code);
-    
-        if (matcher.find()) 
-        {
-            return matcher.group(1);
-        } 
-        else
-        {
-            throw new IllegalArgumentException("No public class found in the submitted code");
-        }
-    }
+        
+        return outputStream.toString();
+    } 
 }

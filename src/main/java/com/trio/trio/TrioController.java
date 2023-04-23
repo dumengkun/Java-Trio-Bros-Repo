@@ -15,12 +15,6 @@ public class TrioController
         this.service = service;
     }
 
-    @GetMapping("/ifelse_puzzle")
-    public String ifelsepuzzle()
-    {
-        return "ifelse_puzzle";
-    }
-
     @GetMapping("/")
     public String home()
     {
@@ -64,7 +58,7 @@ public class TrioController
 
         try 
         {
-            output = service.execute(code);
+            output = service.compileAndRunJavaCode(code);
         } 
         catch (Exception e) 
         {
