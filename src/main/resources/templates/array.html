@@ -28,8 +28,6 @@
             cursor: pointer;
         }
 
-
-
         .container {
             display: flex;
             margin-left: 200px;
@@ -55,6 +53,11 @@
         .sidebar button {
             margin-bottom: 10px;
         }
+        
+        .content {
+            max-width: 800px;
+            width: 1000px;
+        }
     </style>
 </head>
 <body>
@@ -74,7 +77,74 @@
             <button onclick="location.href='/forloop'">Java for loop</button>
             <button onclick="location.href='/array'">Java arrays</button>
         </div>
+        <div class="content">
+            <h2>Array Concept in Java</h2>
+            <p>An array in Java is a data structure that can store multiple elements of the same data type. It is a powerful construct because it allows for efficient handling of large datasets and the performance of various operations on them. Arrays are indexed, which means that each element in the array can be accessed using its index. In Java, array indices start at 0 and go up to the array length minus one.</p>
+
+            <h3>1. Declaration and Initialization</h3>
+            <p>To create an array in Java, you first need to declare its type and size. The syntax for declaring an array is as follows:</p>
+            <pre><code>datatype[] arrayName;</code></pre>
+            <p>For example, to declare an integer array called "numbers":</p>
+            <pre><code>int[] numbers;</code></pre>
+            <p>Once the array is declared, you can initialize it with values. There are a few ways to do this:</p>
+            <ul>
+                <li>Allocate memory for the array using the "new" keyword and specifying the size of the array:</li>
+                <pre>                <code>numbers = new int[5];</code></pre>
+                <li>Initialize the array with values directly:</li>
+                <pre><code>int[] numbers = {1, 2, 3, 4, 5};</code></pre>
+            </ul>
+
+            <h3>2. Accessing Array Elements</h3>
+            <p>You can access individual elements of an array using their index. The syntax for accessing an element is as follows:</p>
+            <pre><code>arrayName[index];</code></pre>
+            <p>For example, to access the first element in the "numbers" array:</p>
+            <pre><code>int firstNumber = numbers[0];</code></pre>
+
+            <h3>3. Looping Through an Array</h3>
+            <p>To perform operations on each element of an array, you can use loops. There are multiple ways to loop through an array:</p>
+            <ul>
+                <li>Using a for loop:</li>
+                <pre><code>
+                    for (int i = 0; i &lt; numbers.length; i++)
+                    {
+                        System.out.println(numbers[i]);
+                    }
+                </code></pre>
+                <li>Using a for-each loop (also known as an enhanced for loop):</li>
+                <pre><code>
+                    for (int number : numbers) 
+                    {
+                        System.out.println(number);
+                    }
+                </code></pre>
+            </ul>
+
+            <h3>4. Multidimensional Arrays</h3>
+            <p>Java also supports multidimensional arrays, which are arrays of arrays. For example, a 2D array can be thought of as a matrix or a table with rows and columns. To declare and initialize a 2D array:</p>
+            <pre><code>int[][] matrix = new int[3][4]; // A 3x4 matrix</code></pre>
+            <p>Or directly initialize with values:</p>
+            <pre><code>
+                int[][] matrix = 
+                {
+                    {1, 2, 3},
+                    {4, 5, 6},
+                    {7, 8, 9}
+                };
+            </code></pre>
+            <p>To access an element in a 2D array, you need to specify both row and column indices:</p>
+            <pre><code>int element = matrix[rowIndex][columnIndex];</code></pre>
+
+            <h3>5. Array Manipulation</h3>
+            <p>Java provides a utility class called <code>java.util.Arrays</code> to perform various operations on arrays, such as sorting, searching, and comparing. Some common methods include:</p>
+            <ul>
+                <li><code>Arrays.sort(array)</code>: Sorts the array in ascending order.</li>
+                <li><code>Arrays.binarySearch(array, key)</code>: Searches the sorted array for the specified key using binary search algorithm.</li>
+                <li><code>Arrays.equals(array1, array2)</code>: Compares two arrays for equality.</li>
+            </ul>
+            <p>In summary, arrays in Java are a fundamental data structure that allows you to store and manage multiple elements of the same type. They offer efficient handling of large datasets, easy access to elements via indices, and support for various manipulation methods through the <code>java.util.Arrays</code> class.</p>
+        </div>
     </div>
 
 </body>
 </html>
+
