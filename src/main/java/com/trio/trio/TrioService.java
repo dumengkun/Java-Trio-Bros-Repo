@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
@@ -34,6 +32,11 @@ public class TrioService
         File sourceFile = new File(outputDirectory + fileName);
         sourceFile.getParentFile().mkdirs();
 
+        DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
+        StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
+        Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(java.util.Collections.singletonList(sourceFile));
+        JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, null, null, compilationUnits);
+
         try (FileWriter fileWriter = new FileWriter(sourceFile)) 
         {
             fileWriter.write(code);
@@ -43,11 +46,6 @@ public class TrioService
             e.printStackTrace();
             return null;
         }
-
-        DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
-        StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
-        Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(java.util.Collections.singletonList(sourceFile));
-        JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, null, null, compilationUnits);
 
         if (!task.call()) 
         {
@@ -62,7 +60,6 @@ public class TrioService
         }
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outputStream));
 
         try {
@@ -76,18 +73,7 @@ public class TrioService
         {
             e.printStackTrace();
             return null;
-        } 
-        finally 
-        {
-            try {
-                Files.deleteIfExists(Paths.get(outputDirectory + fileName));
-                Files.deleteIfExists(Paths.get(outputDirectory + className + ".class"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.setOut(originalOut);
         }
-
         
         return outputStream.toString();
     } 

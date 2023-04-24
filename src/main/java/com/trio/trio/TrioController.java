@@ -70,4 +70,10 @@ public class TrioController
 
         return "runner";
     }
+
+    @GetMapping("/maze")
+    public String showMaze()
+    {
+        return "maze";
+    }
 }
