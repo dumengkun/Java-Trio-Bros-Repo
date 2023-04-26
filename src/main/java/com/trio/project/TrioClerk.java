@@ -8,30 +8,39 @@ import lombok.AllArgsConstructor;
 @Service
 public class TrioClerk {
     
-    private final UserRepository userRepository;
+    private final VolunRepository volunRepository;
+    private final AdminRepository adminRepository;
 
-    public void setStudent(User user) {
-        userRepository.save(user);
+    public void setUser(Volunteer user) {
+        volunRepository.save(user);
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public Volunteer findByUserEmail(String email) {
+        return volunRepository.findByEmail(email);
+    }
+
+    public List<Volunteer> findByUserName(String name) {
+        return volunRepository.findByName(name);
+    }
+
+    public List<Volunteer> getAllUsers() {
+        return volunRepository.findAll();
+    }
+
+    public void updateUser() {
+
+    }
+
+    public void deleteByUserEmail(String email) {
+        volunRepository.deleteByEmail(email);
     }
 
     public void deleteAllUsers() {
-        userRepository.deleteAll();
+        volunRepository.deleteAll();
     }
 
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    public void deleteByEmail(String email) {
-        userRepository.deleteByEmail(email);
-    }
-
-    public List<User> findByName(String name) {
-        return userRepository.findByName(name);
+    public void setAdmin(Administrator developer) {
+        adminRepository.save(developer);
     }
 
 }

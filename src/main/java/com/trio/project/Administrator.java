@@ -6,8 +6,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Data;
 
 @Data
-@Document(collection = "users")
-public class User {
+@Document(collection = "developers")
+public class Administrator {
 
     @Id
     private String id;
@@ -17,18 +17,35 @@ public class User {
     @Indexed(unique = true)
     private String email;
 
-    public User() {
+    private String password;
+
+    private String note;
+
+    public Administrator() {
     }
 
-    public User(String name, String email) {
+    public Administrator(String email, String name) {
         this.name = name;
         this.email = email;
+        this.password = "pdw123";
     }
 
     @Override
     public String toString() {
         return String.format(
-            "Student[id=%s, name='%s', email='%s']", id, name, email);
+            "Admin[id=%s, email='%s', name='%s']", id, email, name);
+    }
+
+    public boolean pwdChecker() {
+
+        return password.length() > 6;
+
+    }
+
+    public void emailLowerCase() {
+
+        this.email.toLowerCase();
+
     }
     
 }

@@ -25,27 +25,25 @@
             </p>
         </form>
 
-        <h3>Registered students:</h3>
+        <h3>Registered users:</h3>
         <table>
             <tr>
-                <td>Name</td>
                 <td>Email</td>
+                <td>Password</td>
+                <td>Name</td>
+                <td>Note</td>
             </tr>
             <th:block th:each="user : ${personOutput}">
                 <tr>
-                    <td th:text="${user.getName()}"></td>
                     <td th:text="${user.getEmail()}"></td>
+                    <td th:text="${user.getPassword()}"></td>
+                    <td th:text="${user.getName()}"></td>
+                    <td th:text="${user.getNote()}"></td>
                 </tr>
             </th:block>
         </table>
         <hr>
 
-        <a href="/register">Register for another user</a>
-        <br>
-        <a href="/update">Need to delete</a>
-        <br>
-        <a href="/results">View all users</a>
-        <br>
         <a href="/home">Return to home page</a>
         
     </body>

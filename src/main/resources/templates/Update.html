@@ -7,21 +7,46 @@
         <p>Kao Vue, Mengkun Du, and Shijun Yang</p>
         <hr>
 
-        <h3>Enter "all" to delete all users</h3>
+        <h3>Please enter the following information to update:</h3>
         <form action="#" th:action="@{/update}" method="post">
-            <p id="email">
-                Delete by email: <input type="text" name="emailInput" />
-                <span id="button">
-                    <input type="submit" value="Delete" />
-                    <input type="reset" value="Reset" />
-                </span>
+
+            <p>
+                <label>Old email: </label>
+                <input type="text" th:object="${guest}" th:field="*{email}" />
+            </p>
+            <p>
+                <label>Old password: </label>
+                <input type="password" th:object="${guest}" th:field="*{password}" />
+            </p>
+            <p>
+                <label>Email: </label>
+                <input type="text" th:object="${guest}" th:field="*{newEmail}" />
+                (should be unique)
+            </p>
+            <p>
+                <label>Password:</label>
+                <input type="password" th:object="${guest}" th:field="*{newPassword}" />
+                (at least 6 characters)
+            </p>
+            <p>
+                <label>Name: </label>
+                <input type="text" th:object="${guest}" th:field="*{name}" />
+            </p>
+            <p id="note">
+                <label>Note:</label><br>
+                <textarea rows="5" cols="50" th:object="${guest}" th:field="*{note}">
+                </textarea> 
+            </p>
+            
+            <p id="button">
+                <input type="submit" value="Update" />
+                <input type="reset" value="Reset" />
             </p>
         </form>
         <hr>
 
-        <a href="/results">View all users</a>
         <br>
-        <a href="/home">Return to home page</a>
+        <a href="/home">To home page</a>
 
     </body>
 </html>
