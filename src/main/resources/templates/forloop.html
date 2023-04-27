@@ -28,7 +28,9 @@
             cursor: pointer;
         }
 
-
+        .text {
+            width: 1000px;
+        }
 
         .container {
             display: flex;
@@ -55,8 +57,93 @@
         .sidebar button {
             margin-bottom: 10px;
         }
+
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+
+        .clickable {
+            color: #007BFF;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .clickable:hover {
+            color: #0056B3;
+        }
     </style>
+    <script>
+        function checkAnswer(questionNumber, correctAnswer) 
+        {
+            var radios = document.getElementsByName("quiz" + questionNumber);
+            var labels = document.getElementsByName("label_quiz" + questionNumber);
+            
+            for (var i = 0; i < radios.length; i++) 
+            {
+                if (radios[i].value == correctAnswer) 
+                {
+                    labels[i].classList.add("correct");
+                } 
+                else {
+                    labels[i].classList.add("incorrect");
+                }
+                
+                radios[i].disabled = true;
+            }
+        }
+
+        function openModal() 
+        {
+            document.getElementById("quizModal").style.display = "block";
+        }
+
+        function closeModal() 
+        {
+            document.getElementById("quizModal").style.display = "none";
+        }
+
+        function openMaze() 
+        {
+            window.open("maze/maze.html", "_blank");
+        }
+    </script>
 </head>
+
 <body>
     <header>
         <div class="logo" onclick="location.href='/'">Trio</div>
@@ -74,6 +161,24 @@
             <button onclick="location.href='/forloop'">Java for loop</button>
             <button onclick="location.href='/array'">Java arrays</button>
         </div>
+    </div>
+
+    <div class="text">
+        <h2>For Loop in Java</h2>
+        <p>In Java, a for loop is a control flow statement that allows you to execute a block of code multiple times with a specified condition. The for loop consists of three main parts: the initialization, the condition, and the iteration statement. These parts are separated by semicolons within the for loop declaration.</p>
+        <p>The initialization is where a loop control variable is declared and initialized. The condition is an expression that is evaluated before each loop iteration. If the condition evaluates to true, the code block within the loop is executed; otherwise, the loop is terminated. The iteration statement updates the loop control variable after each iteration, typically incrementing or decrementing it.</p>
+        <p>Here is a basic example of a for loop in Java:</p>
+        <pre><code>
+            for (int i = 0; i < 10; i++) {
+                System.out.println("Iteration: " + i);
+            }
+        </code></pre>
+        <p>In the example above, the loop control variable 'i' is initialized to 0, the condition is 'i < 10', and the iteration statement is 'i++' (which increments 'i' by 1). The loop will continue to execute as long as 'i' is less than 10. As a result, the loop will print the numbers 0 through 9.</p>
+        <p>For loops are particularly useful when you need to perform an action a specific number of times or when you need to iterate through elements in an array or a collection. They provide a concise and clear way to manage iterations and help prevent errors related to manual loop control.</p>
+    </div>
+
+    <div class="quiz">
+        
     </div>
 
 </body>

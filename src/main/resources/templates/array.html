@@ -28,6 +28,10 @@
             cursor: pointer;
         }
 
+        .text {
+            width: 1000px;
+        }
+
         .container {
             display: flex;
             margin-left: 200px;
@@ -53,13 +57,93 @@
         .sidebar button {
             margin-bottom: 10px;
         }
-        
-        .content {
-            max-width: 800px;
-            width: 1000px;
+
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+
+        .clickable {
+            color: #007BFF;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .clickable:hover {
+            color: #0056B3;
         }
     </style>
+    <script>
+        function checkAnswer(questionNumber, correctAnswer) 
+        {
+            var radios = document.getElementsByName("quiz" + questionNumber);
+            var labels = document.getElementsByName("label_quiz" + questionNumber);
+            
+            for (var i = 0; i < radios.length; i++) 
+            {
+                if (radios[i].value == correctAnswer) 
+                {
+                    labels[i].classList.add("correct");
+                } 
+                else {
+                    labels[i].classList.add("incorrect");
+                }
+                
+                radios[i].disabled = true;
+            }
+        }
+
+        function openModal() 
+        {
+            document.getElementById("quizModal").style.display = "block";
+        }
+
+        function closeModal() 
+        {
+            document.getElementById("quizModal").style.display = "none";
+        }
+
+        function openMaze() 
+        {
+            window.open("maze/maze.html", "_blank");
+        }
+    </script>
 </head>
+
 <body>
     <header>
         <div class="logo" onclick="location.href='/'">Trio</div>
@@ -77,8 +161,10 @@
             <button onclick="location.href='/forloop'">Java for loop</button>
             <button onclick="location.href='/array'">Java arrays</button>
         </div>
-        <div class="content">
-            <h2>Array Concept in Java</h2>
+    </div>
+
+    <div class="text">
+        <h2>Array in Java</h2>
             <p>An array in Java is a data structure that can store multiple elements of the same data type. It is a powerful construct because it allows for efficient handling of large datasets and the performance of various operations on them. Arrays are indexed, which means that each element in the array can be accessed using its index. In Java, array indices start at 0 and go up to the array length minus one.</p>
 
             <h3>1. Declaration and Initialization</h3>
@@ -142,9 +228,11 @@
                 <li><code>Arrays.equals(array1, array2)</code>: Compares two arrays for equality.</li>
             </ul>
             <p>In summary, arrays in Java are a fundamental data structure that allows you to store and manage multiple elements of the same type. They offer efficient handling of large datasets, easy access to elements via indices, and support for various manipulation methods through the <code>java.util.Arrays</code> class.</p>
-        </div>
+    </div>
+
+    <div class="quiz">
+        
     </div>
 
 </body>
 </html>
-

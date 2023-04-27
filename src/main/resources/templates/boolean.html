@@ -28,7 +28,9 @@
             cursor: pointer;
         }
 
-
+        .text {
+            width: 1000px;
+        }
 
         .container {
             display: flex;
@@ -55,8 +57,93 @@
         .sidebar button {
             margin-bottom: 10px;
         }
+
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+
+        .clickable {
+            color: #007BFF;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .clickable:hover {
+            color: #0056B3;
+        }
     </style>
+    <script>
+        function checkAnswer(questionNumber, correctAnswer) 
+        {
+            var radios = document.getElementsByName("quiz" + questionNumber);
+            var labels = document.getElementsByName("label_quiz" + questionNumber);
+            
+            for (var i = 0; i < radios.length; i++) 
+            {
+                if (radios[i].value == correctAnswer) 
+                {
+                    labels[i].classList.add("correct");
+                } 
+                else {
+                    labels[i].classList.add("incorrect");
+                }
+                
+                radios[i].disabled = true;
+            }
+        }
+
+        function openModal() 
+        {
+            document.getElementById("quizModal").style.display = "block";
+        }
+
+        function closeModal() 
+        {
+            document.getElementById("quizModal").style.display = "none";
+        }
+
+        function openMaze() 
+        {
+            window.open("maze/maze.html", "_blank");
+        }
+    </script>
 </head>
+
 <body>
     <header>
         <div class="logo" onclick="location.href='/'">Trio</div>
@@ -74,6 +161,24 @@
             <button onclick="location.href='/forloop'">Java for loop</button>
             <button onclick="location.href='/array'">Java arrays</button>
         </div>
+    </div>
+
+    <div class="text">
+        <h2>Boolean in Java</h2>
+        <p>In Java, the boolean data type is used to represent true or false values. It is a primitive data type, meaning it does not require the creation of an object. The boolean data type is often used in conditional statements and logical operations. There are only two possible values for a boolean variable: true and false.</p>
+        <p>Boolean values can be used directly in expressions or assigned to variables. They are typically used in conjunction with comparison operators, such as equals (==), not equals (!=), greater than (>), less than (<), greater than or equal to (>=), and less than or equal to (<=), to evaluate conditions and determine the flow of a program.</p>
+        <p>Java also provides logical operators that work with boolean values, such as AND (&&), OR (||), and NOT (!). These operators enable the combination and manipulation of boolean expressions.</p>
+        <p>For instance, consider a scenario where you have two boolean conditions, 'condition1' and 'condition2'. You can use logical operators to create compound expressions, as shown below:</p>
+        <ul>
+            <li><strong>AND (&&):</strong> The expression 'condition1 && condition2' will evaluate to true only if both conditions are true. Otherwise, it will return false.</li>
+            <li><strong>OR (||):</strong> The expression 'condition1 || condition2' will evaluate to true if at least one of the conditions is true. If both conditions are false, the result will be false.</li>
+            <li><strong>NOT (!):</strong> The expression '!condition1' will invert the value of 'condition1'. If 'condition1' is true, the expression will return false, and if 'condition1' is false, it will return true.</li>
+        </ul>
+        <p>Boolean values and expressions can be used in various programming constructs like if statements, while loops, and for loops, allowing you to create intricate decision-making structures and control the flow of your program.</p>            
+    </div>
+
+    <div class="quiz">
+        
     </div>
 
 </body>
