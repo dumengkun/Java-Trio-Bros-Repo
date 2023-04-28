@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Trio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo" onclick="location.href='/'">Java Trio Bros</div>
+        <div>
+            <button onclick="location.href='/signin'">Sign in</button>
+            <button onclick="location.href='/signup'">Sign up</button>
+            <button onclick="location.href='/runner'">Runner</button>
+        </div>
+    </header>
+
+    <div class="sidebar">
+        <h2>Java Tutorial</h2>
+        <button onclick="location.href='/ifelse'">Java if-else</button>
+        <button onclick="location.href='/boolean'">Java boolean</button>
+        <button onclick="location.href='/forloop'">Java for loop</button>
+        <button onclick="location.href='/array'">Java arrays</button>
+        <button onclick=openModal()>Java quiz</button>
+        <button onclick=openMaze()>Game (demo)</button>
+        <button onclick=aboutMaze()>About game</button>
+        <script src="script.js"></script>
+    </div>
+
+    <div class="text">
+        <h2>Welcome to Java Trio Bros Learner App!</h2>
+        <p>Kao Vue, Mengkun Du, and Shijun Yang</p>
+        <hr>
+        <p>
+            <h3>Our vision</h3>
+            For students or Java beginners who want to learn Java efficiently and with more interests.
+            The Java Trio Bro Learner App is a software that interactive and beginner friendly.
+            Unlike many other apps and websites that is either too specific or static, our Product wants students to learn java by having fun and without being frustrated.
+        </p>
+        <p>
+            <h3>Our class diagram</h3>
+            <img src="/images/diagram.png" alt="Class Diagram" width="1200">
+        </p>
+    </div>
+
+    <div id="quizModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="quiz">
+                <h4>Question 1</h4>
+                <p>What is the output of the following code snippet?</p>
+                <pre>
+    System.out.println("Hello!");
+                </pre>
+                <form>
+                    <div>
+                        <input type="radio" name="quiz1" value="1">
+                        <label name="label_quiz1" for="quiz1Option1">Hello!</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="quiz1" value="2">
+                        <label name="label_quiz1" for="quiz1Option2">&iexcl;Hola!</label>
+                    </div>
+                    <br>
+                    <button type="button" onclick="checkAnswer(1, '1')">Check Answer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,13 +1,22 @@
-<html>
-    <head> 
-        <title>Trio Bros</title>
-        <link rel="stylesheet" href="/style.css">
-    </head>
-    <body>
-        <h2>Welcome to Java Trio Bros Learner App!</h2>
-        <p>Kao Vue, Mengkun Du, and Shijun Yang</p>
-        <hr>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Trio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
+<body>
+    <header>
+        <div class="logo" onclick="location.href='/'">Java Trio Bros</div>
+        <div>
+            <button onclick="location.href='/signin'">Sign in</button>
+            <button onclick="location.href='/signup'">Sign up</button>
+            <button onclick="location.href='/runner'">Runner</button>
+        </div>
+    </header>
+
+    <div class="text">
         <form action="#" th:action="@{/results}" method="post">
             <p id="name">
                 Search by name: <input type="text" th:object="${searchPerson}" th:field="*{name}" />
@@ -24,6 +33,7 @@
             </span>
             </p>
         </form>
+        <hr>
 
         <h3>Registered users:</h3>
         <table>
@@ -42,9 +52,7 @@
                 </tr>
             </th:block>
         </table>
-        <hr>
-
-        <a href="/home">Return to home page</a>
+    </div>
         
-    </body>
+</body>
 </html>

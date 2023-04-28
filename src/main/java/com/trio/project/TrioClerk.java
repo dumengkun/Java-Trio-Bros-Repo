@@ -27,10 +27,6 @@ public class TrioClerk {
         return volunRepository.findAll();
     }
 
-    public void updateUser() {
-
-    }
-
     public void deleteByUserEmail(String email) {
         volunRepository.deleteByEmail(email);
     }
@@ -41,6 +37,10 @@ public class TrioClerk {
 
     public void setAdmin(Administrator developer) {
         adminRepository.save(developer);
+    }
+
+    public List<Administrator> getAllAdmins() {
+        return adminRepository.findAll();
     }
 
 }

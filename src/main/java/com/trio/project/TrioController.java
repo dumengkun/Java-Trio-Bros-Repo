@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -18,11 +19,63 @@ public class TrioController {
     @Autowired
     private TrioArtist artist;
 
-    @GetMapping("/home")
+    @Autowired
+    private TrioRunner runner;
+
+    @GetMapping("/")
     public String homePage(Model model) {
 
-        return "home";
+        return "index";
         
+    }
+
+    @GetMapping("/ifelse")
+    public String ifelsePage()
+    {
+        return "ifelse";
+    }
+
+    @GetMapping("/boolean")
+    public String booleanPage()
+    {
+        return "boolean";
+    }
+
+    @GetMapping("/forloop")
+    public String forloopPage()
+    {
+        return "forloop";
+    }
+
+    @GetMapping("/array")
+    public String arrayPage()
+    {
+        return "array";
+    }
+
+    @GetMapping("/runner")
+    public String runnerPage()
+    {
+        return "runner";
+    }
+
+    @PostMapping("/runner")
+    public String runnerPostPage(@RequestParam("code") String code, Model model)
+    {
+        String output;
+
+        try 
+        {
+            output = runner.compileAndRunJavaCode(code);
+        } 
+        catch (Exception e) 
+        {
+            output = "Error: " + e.getMessage();
+        }
+
+        model.addAttribute("output", output);
+        model.addAttribute("submittedCode", code);
+        return "runner";
     }
 
     @GetMapping("/signup")
@@ -45,11 +98,12 @@ public class TrioController {
 
                 poi.emailLowerCase();
                 clerk.setUser(poi);
-                return artist.renderSignupPostPage(model, poi);
+                model.addAttribute("myUser", poi);
+                return "user-page";
 
             } catch (Exception e) {
 
-                return artist.renderEmailPage(model, poi);
+                return artist.renderEmailPage(model, poi.getEmail());
 
             }
 
@@ -68,30 +122,78 @@ public class TrioController {
     public String signinPostPage(Model model, @ModelAttribute("guest") Guest guest) {
 
         Volunteer user = clerk.findByUserEmail(guest.getEmail());
-        return artist.renderSigninPostPage(model, user, guest);
+        
+        if (user != null && user.pwdChecker(guest.getPassword())) {
+
+            model.addAttribute("myUser", user);
+            return "user-page";
+
+        } else {
+
+           return artist.renderIdentificationPage(model);
+            
+        }
+
+    }
+
+    @PostMapping("/inote")
+    public String userNotePostPage(Model model, @ModelAttribute("myUser") Volunteer poi) {
+
+        Volunteer user = clerk.findByUserEmail(poi.getEmail());
+        clerk.deleteByUserEmail(poi.getEmail());
+        user.setNote(poi.getNote());
+        clerk.setUser(user);
+
+        model.addAttribute("myUser", user);
+        return "user-page";
+
+    }
+
+    @PostMapping("/irunner")
+    public String userRunnerPostPage(Model model, @ModelAttribute("myUser") Volunteer poi, @RequestParam("code") String code) {
+
+        String output;
+
+        try 
+        {
+            output = runner.compileAndRunJavaCode(code);
+        } 
+        catch (Exception e) 
+        {
+            output = "Error: " + e.getMessage();
+        }
+
+        model.addAttribute("myUser", poi);
+        model.addAttribute("code", code);
+        model.addAttribute("output", output);
+        return "user-page";
 
     }
 
     @GetMapping("/update")
-    public String updatePage(Model model) {
+    public String updatePage(Model model, @ModelAttribute("myUser") Guest guest) {
 
-        return artist.renderUpdatePage(model);
+        model.addAttribute("guest", guest);
+        return "update";
 
     }
 
     @PostMapping("/update")
-    public String userPostPage(Model model, @ModelAttribute("guest") Guest guest) {
+    public String updatePostPage(Model model, @ModelAttribute("guest") Guest guest) {
 
         Volunteer user = clerk.findByUserEmail(guest.getEmail());
-        Volunteer otherUser = clerk.findByUserEmail(guest.getNewEmail());
 
         if (user != null && user.pwdChecker(guest.getPassword())) {
+
+            user.setName(guest.getName());
     
             if (!guest.getNewEmail().isEmpty()) {
 
+                Volunteer otherUser = clerk.findByUserEmail(guest.getNewEmail());
+
                 if (otherUser != null) {
 
-                    return artist.renderEmailPage(model, otherUser);
+                    return artist.renderEmailPage(model, guest.getNewEmail());
                 }
 
                 user.setEmail(guest.getNewEmail());
@@ -110,22 +212,28 @@ public class TrioController {
     
             }
 
-            if (!guest.getName().isEmpty()) {
-                
-                user.setName(guest.getName());
-
-            }
-
-            if (!guest.getNote().isEmpty()) {
-                
-                user.setNote(guest.getNote());
-            
-            }
-
             clerk.deleteByUserEmail(guest.getEmail());
             clerk.setUser(user);
             model.addAttribute("myUser", user);
             return "user-page";
+
+        } else {
+
+            return artist.renderIdentificationPage(model);
+            
+        }
+
+    }
+
+    @PostMapping("/delete")
+    public String deletePostPage(Model model, @ModelAttribute("guest") Guest guest) {
+
+        Volunteer user = clerk.findByUserEmail(guest.getEmail());
+
+        if (user != null && user.pwdChecker(guest.getPassword())) {
+
+            clerk.deleteByUserEmail(guest.getEmail());
+            return artist.renderDeletePage(model, guest.getEmail());
 
         } else {
 
@@ -162,38 +270,5 @@ public class TrioController {
         return "admin/results";
 
     }
-
-    /*
-    @GetMapping("/update")
-    public String updateStudentPage(Model model) {
-
-        return "update";
-
-    }
-
-    @PostMapping("/update")
-    public String getUpdatedStudentPage(Model model, @RequestParam("emailInput") String email) {
-
-        if (email.equals("all") || email.equals("All") || email.equals("ALL")) {
-            List<Volunteer> users = clerk.getAllUsers();
-            model.addAttribute("personOutput", users);
-            model.addAttribute("message", "Users below are deleted");
-            clerk.deleteAllUsers();
-        } else {
-            Volunteer user = clerk.findByUserEmail(email);
-            if (user != null) {
-                model.addAttribute("personOutput", user);
-                model.addAttribute("message", "User below is deleted");
-                clerk.deleteByUserEmail(email); 
-            } else {
-                model.addAttribute("message", "No such user");
-            }
-        }
-
-        return "message";
-
-    }
-
-    */
 
 }

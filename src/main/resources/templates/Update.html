@@ -1,42 +1,49 @@
-<html>
-    <head>
-        <title>Trio Bros</title>
-    </head>
-    <body>
-        <h2>Welcome to Java Trio Bros Learner App!</h2>
-        <p>Kao Vue, Mengkun Du, and Shijun Yang</p>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Trio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo" onclick="location.href='/'">Java Trio Bros</div>
+        <div>
+            <button onclick="location.href='/signin'">Sign in</button>
+            <button onclick="location.href='/signup'">Sign up</button>
+        </div>
+        
+    </header>
+
+    <div class="text">
+        <h2>Hello <span th:text="${guest.getName()}"></span>!</h2>
+        <p>Your current email is <span th:text="${guest.getEmail()}"></span></p>
         <hr>
-
-        <h3>Please enter the following information to update:</h3>
+        <h3>Update Profile</h3>
+        <p>
+            <em>If you do not wish to change your email or password, please leave it blank</em>
+        </p>
         <form action="#" th:action="@{/update}" method="post">
-
+            <input type="hidden" th:object="${guest}" th:field="*{email}" />
             <p>
-                <label>Old email: </label>
-                <input type="text" th:object="${guest}" th:field="*{email}" />
-            </p>
-            <p>
-                <label>Old password: </label>
+                <label>Old password (required): </label>
                 <input type="password" th:object="${guest}" th:field="*{password}" />
             </p>
             <p>
-                <label>Email: </label>
+                <label>New name: </label>
+                <input type="text" th:object="${guest}" th:field="*{name}" />
+            </p>
+            <p>
+                <label>New email: </label>
                 <input type="text" th:object="${guest}" th:field="*{newEmail}" />
                 (should be unique)
             </p>
             <p>
-                <label>Password:</label>
+                <label>New password:</label>
                 <input type="password" th:object="${guest}" th:field="*{newPassword}" />
                 (at least 6 characters)
             </p>
-            <p>
-                <label>Name: </label>
-                <input type="text" th:object="${guest}" th:field="*{name}" />
-            </p>
-            <p id="note">
-                <label>Note:</label><br>
-                <textarea rows="5" cols="50" th:object="${guest}" th:field="*{note}">
-                </textarea> 
-            </p>
+            
             
             <p id="button">
                 <input type="submit" value="Update" />
@@ -44,9 +51,20 @@
             </p>
         </form>
         <hr>
+        <h3>Delete Account</h3>
+        <form action="#" th:action="@{/delete}" method="post">
+            <input type="hidden" th:object="${guest}" th:field="*{email}" />
+            <p>
+                <label>Old password (required): </label>
+                <input type="password" th:object="${guest}" th:field="*{password}" />
+            </p>
+            
+            <p id="button">
+                <input type="submit" value="Delete" />
+                <input type="reset" value="Reset" />
+            </p>
+        </form>
+    </div>
 
-        <br>
-        <a href="/home">To home page</a>
-
-    </body>
+</body>
 </html>

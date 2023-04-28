@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Trio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo" onclick="location.href='/'">Java Trio Bros</div>
+        <div>
+            <button onclick="location.href='/signin'">Sign in</button>
+            <button onclick="location.href='/signup'">Sign up</button>
+            <button onclick="location.href='/runner'">Runner</button>
+        </div>
+    </header>
+
+    <div class="sidebar">
+        <h2>Java Tutorial</h2>
+        <button onclick="location.href='/ifelse'">Java if-else</button>
+        <button onclick="location.href='/boolean'">Java boolean</button>
+        <button onclick="location.href='/forloop'">Java for loop</button>
+        <button onclick="location.href='/array'">Java arrays</button>
+        <button onclick=openModal()>Java quiz</button>
+        <button onclick=openMaze()>Game (demo)</button>
+        <button onclick=aboutMaze()>About game</button>
+        <script src="script.js"></script>
+    </div>
+
+    <div class="text">
+        <div>
+            <h2>if-then and if-then-else Statements in Java</h2>
+            <p>In Java, control flow statements are used to define the order in which the statements in a program are executed. The <code>if-then</code> and <code>if-then-else</code> statements are fundamental control flow structures that allow you to conditionally execute a block of code based on whether a specified condition is true or false.</p>
+            <h3>1. if-then statement:</h3>
+            <p>The <code>if-then</code> statement is the most basic control flow statement. It is used to execute a block of code only if a specified condition is true. If the condition is false, the block of code inside the <code>if-then</code> statement is skipped, and the program continues with the next statement after the <code>if-then</code> block.</p>
+            <p>The syntax for an <code>if-then</code> statement is:</p>
+            <pre>
+                if (condition) 
+                {
+                    // Code to execute if the condition is true
+                }
+            </pre>
+            <p>Here, <code>condition</code> is a boolean expression that evaluates to either <code>true</code> or <code>false</code>. If the condition is <code>true</code>, the code inside the curly braces (<code>{}</code>) is executed.</p>
+            <h4>Example:</h4>
+            <pre>
+                int a = 5;
+                int b = 10;
+                
+                if (a &lt; b) 
+                {
+                    System.out.println("a is less than b.");
+                }
+            </pre>
+            <p>In this example, since <code>a</code> is less than <code>b</code>, the condition is true, and the message "a is less than b." will be printed.</p>
+            <h3>2. if-then-else statement:</h3>
+            <p>The <code>if-then-else</code> statement extends the <code>if-then</code> statement by providing an alternative block of code to execute when the specified condition is false. This allows you to perform different actions depending on whether the condition is true or false.</p>
+            <p>The syntax for an <code>if-then-else</code> statement is:</p>
+            <pre>
+                if (condition) 
+                {
+                    // Code to execute if the condition is true
+                } 
+                else 
+                {
+                    // Code to execute if the condition is false
+                }
+            </pre>
+            <h4>Example:</h4>
+            <pre>
+                int a = 5;
+                int b = 10;
+                
+                if (a &gt; b) 
+                {
+                    System.out.println("a is greater than b.");
+                } 
+                else 
+                {
+                    System.out.println("a is less than or equal to b.");
+                }
+            </pre>
+            <p>In this example, since <code>a</code> is not greater than <code>b</code>, the condition is false, and the message "a is less than or equal to b." will be printed.</p>
+            <p>In conclusion, the <code>if-then</code> and <code>if-then-else</code> statements in Java are used to conditionally execute code based on the result of a boolean expression. These statements are essential for controlling the flow of a program and making decisions based on various conditions.</p>
+    </div>
+    
+    <div id="quizModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="quiz">
+                <h4>Question 1</h4>
+                <p>What is the output of the following code snippet?</p>
+                <pre>
+    if (3 > 2) 
+    {
+        System.out.println("Three is greater than two.");
+    } 
+    else 
+    {
+        System.out.println("Two is greater than three.");
+    }
+                </pre>
+                <form>
+                    <div>
+                        <input type="radio" name="quiz1" value="1">
+                        <label name="label_quiz1" for="quiz1Option1">Three is greater than two.</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="quiz1" value="2">
+                        <label name="label_quiz1" for="quiz1Option2">Two is greater than three.</label>
+                    </div>
+                    <br>
+                    <button type="button" onclick="checkAnswer(1, '1')">Check Answer</button>
+                </form>
+            </div>
+
+            <div class="mt-5">
+                <h4>Question 2</h4>
+                <p>What is the output of the following code snippet?</p>
+                <pre>
+    int x = 5;
+    int y = 10;
+
+    if (x > y) 
+    {
+        System.out.println("x is greater than y.");
+    } 
+    else 
+    {
+        System.out.println("x is less than or equal to y.");
+    }
+                </pre>
+                <form>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="quiz2" id="quiz2Option1" value="1">
+                        <label name="label_quiz2" for="quiz2Option1">x is greater than y.</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="quiz2" id="quiz2Option2" value="2">
+                        <label name="label_quiz2" for="quiz2Option2">x is less than or equal to y.</label>
+                    </div>
+                    <br>
+                    <button type="button" onclick="checkAnswer(2, '2')">Check Answer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+        
+</body>
+</html>

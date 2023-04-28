@@ -1,13 +1,22 @@
-<html>
-    <head>
-        <title>Online Portal</title>
-    </head>
-    <body>
-        <h2>Welcome to Java Trio Bros Learner App!</h2>
-        <p>Kao Vue, Mengkun Du, and Shijun Yang</p>
-        <hr>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Trio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-        <h3>Please enter the following information to sign up:</h3>
+<body>
+    <header>
+        <div class="logo" onclick="location.href='/'">Java Trio Bros</div>
+        <div>
+            <button onclick="location.href='/signin'">Sign in</button>
+            <button onclick="location.href='/runner'">Runner</button>
+        </div>
+    </header>
+
+    <div class="text">
+        <h2>Please enter the following information to sign up:</h2>
         <form action="#" th:action="@{/signup}" method="post">
             <p id="email">
                 Email: <input type="text" th:object="${newUser}" th:field="*{email}" />
@@ -25,11 +34,7 @@
                 <input type="reset" value="Reset" />
             </p>
         </form>
-        <hr>
+    </div>
 
-        <h3>
-            <a href="/home">To home page</a>
-        </h3>
-
-    </body>
+</body>
 </html>

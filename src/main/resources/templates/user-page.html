@@ -1,24 +1,48 @@
-<html>
-    <head> 
-        <title>Trio Bros</title>
-    </head>
-    <body>
-        <h2>Welcome to Java Trio Bros Learner App!</h2>
-        <p>Kao Vue, Mengkun Du, and Shijun Yang</p>
-        <hr>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Trio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-        <h3>Hello <span th:text="${myUser.getName()}"></span>!</h3>
-        <p>Your username is <span th:text="${myUser.getEmail()}"></span></p>
+<body>
+    <header>
+        <div class="logo" onclick="location.href='/'">Java Trio Bros</div>
+        <div>
+            <form action="#" th:action="@{/update}" method="get">
+                <input type="hidden" th:object="${myUser}" th:field="*{email}" />
+                <input type="hidden" th:object="${myUser}" th:field="*{name}" />
+                <button type="submit" th:text="${myUser.getEmail()}"></button>
+            </form>
+        </div>
+    </header>
 
-        <p>Your note is</p>
-        <textarea rows="5" cols="50" th:text="${myUser.getNote()}"></textarea>
-        <hr>
+    <div class="text">
+        <h2>Hello <span th:text="${myUser.getName()}"></span>!</h2>
+        <h3>Your note is</h3>
+        <form action="#" th:action="@{/inote}" method="post">
+            <input type="hidden" th:object="${myUser}" th:field="*{email}" />
+            <input type="hidden" th:object="${myUser}" th:field="*{name}" />
+            <textarea id="note"rows="15" cols="80" th:object="${myUser}" th:field="*{note}">
+            </textarea>
+            <button type="submit">Save</button>
+        </form>
+    </div>
 
-        <h3>
-            <a href="/update">To update profile</a>
-            <br>
-            <a href="/home">To home page</a>
-        </h3>
-        
-    </body>
+    <div class="text">
+        <h3>Trio Runner</h3>
+        <form action="#" th:action="@{/irunner}" method="post">
+            <input type="hidden" th:object="${myUser}" th:field="*{email}" />
+            <input type="hidden" th:object="${myUser}" th:field="*{name}" />
+            <input type="hidden" th:object="${myUser}" th:field="*{note}" />
+            <textarea id="note"rows="15" cols="80" name="code" th:text="${code}">
+            </textarea>
+            <button type="submit">Execute</button>
+        </form>
+        <h3>Output:</h3>
+        <pre th:text="${output}"></pre>
+    </div>
+
+</body>
 </html>

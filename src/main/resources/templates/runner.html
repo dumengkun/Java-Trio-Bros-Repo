@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Trio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo" onclick="location.href='/'">Java Trio Bros</div>
+        <div>
+            <button onclick="location.href='/signin'">Sign in</button>
+            <button onclick="location.href='/signup'">Sign up</button>
+        </div>
+        
+    </header>
+
+    <div class="sidebar">
+        <h2>Java Tutorial</h2>
+        <button onclick="location.href='/ifelse'">Java if-else</button>
+        <button onclick="location.href='/boolean'">Java boolean</button>
+        <button onclick="location.href='/forloop'">Java for loop</button>
+        <button onclick="location.href='/array'">Java arrays</button>
+        <button onclick=openModal()>Java quiz</button>
+        <button onclick=openMaze()>Game (demo)</button>
+        <button onclick=aboutMaze()>About game</button>
+        <script src="script.js"></script>
+    </div>
+
+    <div class="text">
+        <h2>Trio Runner</h2>
+        <form method="post" action="/runner">
+            <br/>
+            <textarea id="code" name="code" rows="15" cols="80">
+public class Trio 
+{
+    public static void main(String[] args) 
+    {
+        System.out.println("Hello!");
+    }
+}
+            </textarea>
+            <br/>
+            <button type="submit">Execute</button>
+        </form>
+        <h2>Output:</h2>
+        <pre th:text="${output}"></pre>
+    </div>
+    
+    <script th:inline="javascript">
+        var submittedCode = /*[[${submittedCode}]]*/ "";
+        if (submittedCode) 
+        {
+            document.getElementById('code').value = submittedCode;
+        }
+    </script>
+
+</body>
+</html>

@@ -22,17 +22,10 @@ public class TrioArtist {
 
     }
 
-    public String renderEmailPage(Model model, Volunteer poi) {
+    public String renderEmailPage(Model model, String email) {
 
-        model.addAttribute("message", "The email address " + poi.getEmail() + " is registered");
+        model.addAttribute("message", "The email address " + email + " is registered");
         return "message";
-
-    }
-
-    public String renderSignupPostPage(Model model, Volunteer poi) {
-
-        model.addAttribute("myUser", poi);
-        return "user-page";
 
     }
 
@@ -50,26 +43,11 @@ public class TrioArtist {
 
     }
 
-    public String renderSigninPostPage(Model model, Volunteer user, Guest guest) {
+    public String renderDeletePage(Model model, String email) {
 
-        if (user != null && user.pwdChecker(guest.getPassword())) {
+        model.addAttribute("message", "Account " + email + " is deleted");
+        return "message";
 
-            model.addAttribute("myUser", user);
-            return "user-page";
-
-        } else {
-
-           return this.renderIdentificationPage(model);
-            
-        }
-
-    }
-
-    public String renderUpdatePage(Model model) {
-
-        model.addAttribute("guest", new Guest());
-        return "update";
-        
     }
     
 }

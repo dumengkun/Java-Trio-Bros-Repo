@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Trio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo" onclick="location.href='/'">Java Trio Bros</div>
+        <div>
+            <button onclick="location.href='/signin'">Sign in</button>
+            <button onclick="location.href='/signup'">Sign up</button>
+            <button onclick="location.href='/runner'">Runner</button>
+        </div>
+    </header>
+
+    <div class="sidebar">
+        <h2>Java Tutorial</h2>
+        <button onclick="location.href='/ifelse'">Java if-else</button>
+        <button onclick="location.href='/boolean'">Java boolean</button>
+        <button onclick="location.href='/forloop'">Java for loop</button>
+        <button onclick="location.href='/array'">Java arrays</button>
+        <button onclick=openModal()>Java quiz</button>
+        <button onclick=openMaze()>Game (demo)</button>
+        <button onclick=aboutMaze()>About game</button>
+        <script src="script.js"></script>
+    </div>
+
+    <div class="text">
+        <h2>Boolean in Java</h2>
+        <p>In Java, the boolean data type is used to represent true or false values. It is a primitive data type, meaning it does not require the creation of an object. The boolean data type is often used in conditional statements and logical operations. There are only two possible values for a boolean variable: true and false.</p>
+        <p>Boolean values can be used directly in expressions or assigned to variables. They are typically used in conjunction with comparison operators, such as equals (==), not equals (!=), greater than (>), less than (<), greater than or equal to (>=), and less than or equal to (<=), to evaluate conditions and determine the flow of a program.</p>
+        <p>Java also provides logical operators that work with boolean values, such as AND (&&), OR (||), and NOT (!). These operators enable the combination and manipulation of boolean expressions.</p>
+        <p>For instance, consider a scenario where you have two boolean conditions, 'condition1' and 'condition2'. You can use logical operators to create compound expressions, as shown below:</p>
+        <ul>
+            <li><strong>AND (&&):</strong> The expression 'condition1 && condition2' will evaluate to true only if both conditions are true. Otherwise, it will return false.</li>
+            <li><strong>OR (||):</strong> The expression 'condition1 || condition2' will evaluate to true if at least one of the conditions is true. If both conditions are false, the result will be false.</li>
+            <li><strong>NOT (!):</strong> The expression '!condition1' will invert the value of 'condition1'. If 'condition1' is true, the expression will return false, and if 'condition1' is false, it will return true.</li>
+        </ul>
+        <p>Boolean values and expressions can be used in various programming constructs like if statements, while loops, and for loops, allowing you to create intricate decision-making structures and control the flow of your program.</p>            
+    </div>
+
+    <div class="quiz">
+        
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
