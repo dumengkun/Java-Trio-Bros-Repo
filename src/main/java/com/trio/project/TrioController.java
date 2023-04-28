@@ -174,7 +174,7 @@ public class TrioController {
     public String updatePage(Model model, @ModelAttribute("myUser") Guest guest) {
 
         model.addAttribute("guest", guest);
-        return "update";
+        return "user-update";
 
     }
 
