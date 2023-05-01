@@ -1,4 +1,4 @@
-package com.trio.project;
+package com.trio.trio;
 
 import java.util.List;
 import org.springframework.stereotype.Service;

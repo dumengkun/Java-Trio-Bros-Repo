@@ -1,4 +1,4 @@
-package com.trio.project;
+package com.trio.trio;
 
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Service;

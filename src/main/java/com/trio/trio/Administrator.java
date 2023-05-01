@@ -1,4 +1,4 @@
-package com.trio.project;
+package com.trio.trio;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;

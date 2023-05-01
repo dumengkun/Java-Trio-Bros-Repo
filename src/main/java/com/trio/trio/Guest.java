@@ -1,4 +1,4 @@
-package com.trio.project;
+package com.trio.trio;
 
 import lombok.Data;
 

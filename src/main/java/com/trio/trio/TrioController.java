@@ -1,4 +1,4 @@
-package com.trio.project;
+package com.trio.trio;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

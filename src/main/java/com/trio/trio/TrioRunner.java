@@ -1,4 +1,4 @@
-package com.trio.project;
+package com.trio.trio;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
