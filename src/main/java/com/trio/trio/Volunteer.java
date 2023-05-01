@@ -27,7 +27,8 @@ public class Volunteer {
     public Volunteer(String email, String name) {
         this.name = name;
         this.email = email;
-        this.password = "pdw123";
+        this.password = "123456";
+        this.note = "My note";
     }
 
     @Override
