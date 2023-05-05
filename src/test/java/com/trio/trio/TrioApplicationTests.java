@@ -6,6 +6,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -14,8 +15,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -39,11 +40,29 @@ class TrioApplicationTests {
 	}
 
 	@Test
+	public void userStory1_gameTest() throws Exception {
+
+		mockMvc.perform(get("/maze/maze")).andDo(print()).andExpect(status().isOk());
+
+	}
+
+	@Test
 	public void userStory4_runnerTest() throws Exception {
 
 		String validCode = "class Trio { public static void main(String[] args) { System.out.println(\"Hello!\"); } }";
 
 		when(runner.compileAndRunJavaCode(validCode)).thenReturn("Hello!");
+
+	}
+
+	@Test
+	public void userStory5_quizTest() throws Exception {
+
+		mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
+		.andExpect(content().string(containsString("Question 1")));
+
+		mockMvc.perform(get("/ifelse")).andDo(print()).andExpect(status().isOk())
+		.andExpect(content().string(containsString("x is greater than y")));
 
 	}
 
